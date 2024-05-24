@@ -1,0 +1,32 @@
+from azure.storage.blob import generate_blob_sas, BlobSasPermissions
+from datetime import datetime, timedelta, timezone
+import requests
+
+account_name = 'testacarpit1'
+account_key = 'XCnh9cTEn8zwsFvMNr2c6qGGmCtqBqguRI1dt2Zk6csP9UByM0nDz8Gjsy/I5NZSsWJjuyIBXMG1+ASt7Cdl6g=='
+container_name = 'testsascon'
+blob_name = 'Arpit resume 2024.pdf'
+
+# Use datetime.now with timezone.utc for current UTC time
+expiry_time = datetime.now(timezone.utc) + timedelta(hours=1)
+
+sas_token = generate_blob_sas(
+    account_name=account_name,
+    account_key=account_key,
+    container_name=container_name,
+    blob_name=blob_name,
+    permission=BlobSasPermissions(delete=True),
+    expiry=expiry_time
+)
+
+# Construct the full URL with the SAS token
+blob_url = f"https://{account_name}.blob.core.windows.net/{container_name}/{blob_name}?{sas_token}"
+
+print(f"URL to delete the blob: {blob_url}")
+
+
+response = requests.delete(blob_url)
+if response.status_code == 202:
+    print("Blob deleted successfully.")
+else:
+    print(f"Failed to delete blob. Status code: {response.status_code}, Response: {response.text}")
