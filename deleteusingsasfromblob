@@ -3,7 +3,7 @@ from datetime import datetime, timedelta, timezone
 import requests
 
 account_name = 'testacarpit1'
-account_key = 'XCnh9cTEn8zwsFvMNr2c6qGGmCtqBqguRI1dt2Zk6csP9UByM0nDz8Gjsy/I5NZSsWJjuyIBXMG1+ASt7Cdl6g=='
+account_key = ''
 container_name = 'testsascon'
 blob_name = 'Arpit resume 2024.pdf'
 
